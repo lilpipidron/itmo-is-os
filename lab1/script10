@@ -1,0 +1,9 @@
+#!/usr/bin/bash
+
+man bash |
+	tr -s ' ' '\n' |
+	awk 'length($0) == 4 && $0 ~ /^[a-zA-Z]{4}$/' |
+	sort |
+	uniq -c |
+	sort -rn |
+	head -3

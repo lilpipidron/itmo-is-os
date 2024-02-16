@@ -1,0 +1,3 @@
+#!/usr/bin/bash
+
+find /var/log -name "*.log" | wc -l

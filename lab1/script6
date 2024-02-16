@@ -1,0 +1,28 @@
+#!/usr/bin/bash
+
+touch full.log
+prev=false
+awk '{
+if ($3 == "(WW)"){
+  $3 = "Warning"
+  print($0)
+  prev=true
+} else if (substr($3,0,1) != "(" && substr($3,3,1) prev == true){
+  print($0)
+} else {
+prev=false
+}
+}' /home/vadim/Загрузки/log-copy/anaconda/X.log >full.log
+#prev=false
+awk '{
+if ($3 == "(II)"){
+  $3 = "Information"
+  print($0)
+  prev=true
+} else if (substr($3,0,1) != "(" && substr($3,3,1) != ")" && prev == true){
+  print($0)
+} else {
+prev=false
+}
+}' /home/vadim/Загрузки/log-copy/anaconda/X.log >>full.log
+cat full.log
