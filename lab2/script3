@@ -1,0 +1,8 @@
+#!/usr/bin/bash
+
+pgrep -l . |
+	awk '{print $1}' |
+	xargs ps -p |
+	sort -k 4 |
+	head -1 |
+	awk '{print $1}'
