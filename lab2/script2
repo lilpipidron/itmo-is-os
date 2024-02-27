@@ -1,0 +1,5 @@
+#!/usr/bin/bash
+
+pgrep -a . |
+	grep '/sbin/' |
+	awk '{print $1}'
