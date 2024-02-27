@@ -1,5 +1,8 @@
 #!/usr/bin/bash
 
-pgrep -u $USER | wc -l >procAmount
+pgrep -u "$USER" |
+	wc -l >procAmount
 
-pgrep -u $USER | xargs -I {} ps -p {} -o pid=,comm= | awk '{printf "%s:%s\n", $1, $2}' >>procAmount
+pgrep -u "$USER" |
+	xargs -I {} ps -p {} -o pid=,comm= |
+	awk '{printf "%s:%s\n", $1, $2}' >>procAmount
