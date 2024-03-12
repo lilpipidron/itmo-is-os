@@ -1,0 +1,14 @@
+#!/usr/bin/bash
+
+calculate() {
+while true; do 
+  echo $((228*1337)) >> /dev/null
+done
+}
+
+calculate&
+calculate&
+calculate&
+
+wait
+bash
