@@ -1,0 +1,2 @@
+crontab -e
+*/5 * * * 2 /home/vadim/ITMO/itmo-is-os/lab3/script1
