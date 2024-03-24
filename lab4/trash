@@ -1,0 +1,18 @@
+#!/usr/bin/bash
+
+filename=$1
+
+if [ ! -d "$HOME/.trash" ]; then
+	mkdir "$HOME/.trash"
+fi
+
+count=1
+while [ -e "$HOME/.trash/$count" ]; do
+	((count++))
+done
+
+ln "$filename" "$HOME/.trash/$count"
+
+rm "$filename"
+
+echo "$(realpath "$filename") : $count" >> "$HOME/.trash/trash.log"
