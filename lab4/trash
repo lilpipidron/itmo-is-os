@@ -15,4 +15,4 @@ ln "$filename" "$HOME/.trash/$count"
 
 rm "$filename"
 
-echo "$(realpath "$filename") : $count" >> "$HOME/.trash/trash.log"
+echo "$filename:$(realpath "$filename"):$count" >>"$HOME/.trash/trash.log"
