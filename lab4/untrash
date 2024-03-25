@@ -1,0 +1,17 @@
+#!/usr/bin/bash
+
+filename=$1
+
+result=$(grep "^$filename:" "$HOME/.trash/trash.log" | cut -d ':' -f 2,3)
+
+IFS=$'\n' read -r -d '' -a files_array <<<"$result"
+
+for line in "${files_array[@]}"; do
+	IFS=: read -r full_path link_name <<<"$line"
+	echo "Хотите восстановить файл $full_path (y/n): "
+	read -r choice
+	if [ "$choice" = "y" ]; then
+		ln "$HOME/.trash/$link_name" "$full_path"
+		rm "$HOME/.trash/$link_name"
+	fi
+done

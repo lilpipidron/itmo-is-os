@@ -1,0 +1,31 @@
+#!/usr/bin/bash
+
+filename=$1
+
+if [ "$#" -ne 1 ]; then
+	echo "Usage: $(basename "$0") filename"
+	exit 1
+fi
+
+if [ ! -d "$HOME/.trash" ]; then
+	mkdir "$HOME/.trash"
+fi
+
+count=1
+while [ -e "$HOME/.trash/$count" ]; do
+	((count++))
+done
+
+ln "$filename" "$HOME/.trash/$count"
+
+if [ $? -ne 0 ]; then
+	exit 1
+fi
+
+rm "$filename"
+
+if [ $? -ne 0 ]; then
+	exit 1
+fi
+
+echo "$filename:$(realpath "$filename"):$count" >>"$HOME/.trash/trash.log"
