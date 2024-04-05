@@ -11,7 +11,19 @@ for line in "${files_array[@]}"; do
 	echo "Хотите восстановить файл $full_path (y/n): "
 	read -r choice
 	if [ "$choice" = "y" ]; then
-		ln "$HOME/.trash/$link_name" "$full_path"
-		rm "$HOME/.trash/$link_name"
+		if [ -d "$(dirname "$full_path")" ]; then
+			if ln "$HOME/.trash/$link_name" "$full_path" 2>/dev/null; then
+				rm "$HOME/.trash/$link_name"
+			else
+				echo "Не удалось создать жесткую ссылку. Введите новое имя для файла:"
+				read -r new_name
+				ln "$HOME/.trash/$link_name" "$(dirname "$full_path")/$new_name"
+				rm "$HOME/.trash/$link_name"
+			fi
+		else
+			echo "Каталог, указанный в полном пути, не существует. Файл будет восстановлен в домашний каталог."
+			ln "$HOME/.trash/$link_name" "$HOME/$(basename "$full_path")"
+			rm "$HOME/.trash/$link_name"
+		fi
 	fi
 done
