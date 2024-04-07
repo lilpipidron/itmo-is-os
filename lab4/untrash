@@ -1,9 +1,8 @@
 #!/usr/bin/bash
 
 filename=$1
-
-result=$(grep "^$filename:" "$HOME/.trash/trash.log" | cut -d ':' -f 2,3)
-
+result=$(grep -F "$filename:" "$HOME/.trash/trash.log" | cut -d ':' -f 2,3)
+echo "$result"
 IFS=$'\n' read -r -d '' -a files_array <<<"$result"
 
 for line in "${files_array[@]}"; do
