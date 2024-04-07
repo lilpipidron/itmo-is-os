@@ -1,0 +1,22 @@
+#!/usr/bin/bash
+
+login=$1
+mkfifo "$(dirname "$0")/accounts/$login"
+if [[ -f $login ]]; then
+	echo "login already taken"
+	exit 0
+fi
+
+touch "$login"
+
+while IFS= read -r input; do
+	if [ "$input" = "QUIT" ]; then
+		rm "$login"
+		rmfifo "$login"
+		break
+	fi
+
+	for channel in "$(dirname "$0")"/accounts/*; do
+		echo "$input" >"$channel"
+	done
+done

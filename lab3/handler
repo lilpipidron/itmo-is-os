@@ -1,0 +1,7 @@
+#!/usr/bin/bash
+
+login=$1
+while true; do
+	read -r line <"$(dirname "$0")/accounts/$login"
+	echo "New message: $line"
+done
