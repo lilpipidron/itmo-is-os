@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ "$1" = "" ] || [ "$2" = "" ]; then
+	echo "Необходимо указать параметры N и K"
+	exit 1
+fi
+
+N=$1
+K=$2
+
+counter=0
+
+while [ "$counter" -lt "$K" ]; do
+	./newmem.bash "$N" &
+	sleep 1
+	((counter++))
+done
