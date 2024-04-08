@@ -7,20 +7,20 @@ IFS=$'\n' read -r -d '' -a files_array <<<"$result"
 
 for line in "${files_array[@]}"; do
 	IFS=: read -r full_path link_name <<<"$line"
-	echo "Хотите восстановить файл $full_path (y/n): "
+	echo "Untrash file $full_path (y/n): "
 	read -r choice
 	if [ "$choice" = "y" ]; then
 		if [ -d "$(dirname "$full_path")" ]; then
 			if ln "$HOME/.trash/$link_name" "$full_path" 2>/dev/null; then
 				rm "$HOME/.trash/$link_name"
 			else
-				echo "Не удалось создать жесткую ссылку. Введите новое имя для файла:"
+				echo "Cannot create a link. Enter new filename:"
 				read -r new_name
 				ln "$HOME/.trash/$link_name" "$(dirname "$full_path")/$new_name"
 				rm "$HOME/.trash/$link_name"
 			fi
 		else
-			echo "Каталог, указанный в полном пути, не существует. Файл будет восстановлен в домашний каталог."
+			echo "Directory no longer exists. File will be put to user home directory."
 			ln "$HOME/.trash/$link_name" "$HOME/$(basename "$full_path")"
 			rm "$HOME/.trash/$link_name"
 		fi

@@ -2,7 +2,7 @@
 
 declare -A bytesRead
 
-for pid in $(ls /proc | grep -E '^[0-9]+$'); do
+for pid in "$(ls /proc | grep -E '^[0-9]+$')"; do
 	io_file="/proc/$pid/io"
 
 	if [ -f "$io_file" ]; then
@@ -13,7 +13,7 @@ done
 
 sleep 60
 
-for pid in $(ls /proc | grep -E '^[0-9]+$'); do
+for pid in "$(ls /proc | grep -E '^[0-9]+$')"; do
 	io_file="/proc/$pid/io"
 
 	if [ -f "$io_file" ]; then
@@ -23,25 +23,25 @@ for pid in $(ls /proc | grep -E '^[0-9]+$'); do
 	fi
 done
 
-sorted=($(for key in "${!bytesRead[@]}"; do
+sorted=("$(for key in "${!bytesRead[@]}"; do
 	echo "$key ${bytesRead[$key]}"
-done | sort -rn -k2))
+done | sort -rn -k2)")
 
 count=0
 for entry in "${sorted[@]}"; do
-	pid=$(echo $entry | awk '{print $1}')
+	pid=$(echo "$entry" | awk '{print $1}')
 	bytes_read=${bytesRead[$pid]}
 	if [ ! -f "/proc/$pid/cmdline" ]; then
 		continue
 	fi
 	cmdline=$(tr -d '\0' <"/proc/$pid/cmdline")
 
-	if [ ! -z "$cmdline" ]; then
+	if [[ -n $cmdline ]]; then
 		echo "$pid:$cmdline:$bytes_read"
 		((count++))
 	fi
 
-	if [ $count -eq 3 ]; then
+	if [ "$count" -eq 3 ]; then
 		break
 	fi
 done

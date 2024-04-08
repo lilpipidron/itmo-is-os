@@ -3,8 +3,8 @@
 pids=$(pgrep -f "script4.1" | tail -n 3)
 third=$(pgrep -f "script4.1" | tail -n 1)
 
-echo $third
+echo "$third"
 
-cpulimit -p $(echo "$pids" | head -n 1) -l=10 &
+cpulimit -p "$(echo "$pids" | head -n 1)" -l=10 &
 
-kill $third
+kill "$third"

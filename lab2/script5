@@ -18,7 +18,7 @@ while IFS=: read -r f1 f2 rest; do
 		continue
 	fi
 
-	if [[ $f2 != $prev ]]; then
+	if [[ $f2 != "$prev" ]]; then
 		echo "${prev} is ${amount[$prev]}" >>newSorted
 	fi
 	echo "$f1:$f2:$rest" >>newSorted
