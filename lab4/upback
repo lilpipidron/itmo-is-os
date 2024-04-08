@@ -2,10 +2,10 @@
 
 backup_dir="/home/vadim/"
 
-folders=$(ls -d "$backup_dir"/Backup-* | sort -r)
+dirs=$(ls -d "$backup_dir"/Backup-* | sort -r)
 
-latest_folder=$(echo "$folders" | head -n 1)
+latest_dir=$(echo "$dirs" | head -n 1)
 
 destination_dir="/home/vadim/restore"
 
-find "$latest_folder" -type f ! -name '*-*' -exec cp {} "$destination_dir" \;
+find "$latest_dir" -type f ! -regex '.*[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}.*' -exec cp {} "$destination_dir" \;

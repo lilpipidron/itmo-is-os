@@ -23,7 +23,7 @@ else
 			echo "Copied new file: $file_name" >>"$backup_report"
 		else
 			if [ "$(stat -c%s "$file")" -ne "$(stat -c%s "$backup_file")" ]; then
-				mv "$backup_file" "$backup_file-$current_date"
+				mv "$backup_file" "$backup_file.$current_date"
 				cp "$file" "$backup_dir/"
 				echo "Updated file: $file_name (renamed old version to $backup_file-$current_date and copied new version)" >>"$backup_report"
 			fi
