@@ -6,10 +6,8 @@ factorial() {
 	for ((i = 1; i <= n; i++)); do
 		result=$((result * i))
 	done
-	echo "$result"
 }
 
-
 for ((i = 1; i <= $1; i++)); do
-	echo "Факториал числа $i равен $(factorial "$i")"
+	factorial "$i"
 done

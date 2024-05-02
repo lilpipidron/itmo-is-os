@@ -6,7 +6,6 @@ factorials() {
 	for ((i = 1; i <= n; i++)); do
 		result=$((result * i))
 	done
-	echo "$result"
 }
 
 calculate_factorial() {
@@ -15,7 +14,6 @@ calculate_factorial() {
 	for ((i = 1; i <= n; i++)); do
 		result=$((result * i))
 	done
-	echo "Факториал числа $n равен $result"
 }
 
 export -f calculate_factorial
