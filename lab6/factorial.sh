@@ -9,8 +9,7 @@ factorial() {
 	echo "$result"
 }
 
-read -rp "Введите число N: " n
 
-for ((i = 1; i <= n; i++)); do
+for ((i = 1; i <= $1; i++)); do
 	echo "Факториал числа $i равен $(factorial "$i")"
 done
