@@ -1,6 +1,7 @@
-package main
+﻿package main
 
 import (
+	"fmt"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -8,7 +9,7 @@ import (
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	root := "./"
+	root := "."
 
 	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -16,6 +17,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		}
 		if !info.IsDir() && strings.Contains(info.Name(), "exp") {
 			http.ServeFile(w, r, path)
+			filename := filepath.Base(path)
+			w.Header().Set("Content-Disposition", fmt.Sprintf(`attachment; filename="%s"`, filename))
 		}
 		return nil
 	})
@@ -26,5 +29,5 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.HandleFunc("/", handler)
-  http.ListenAndServe(":1234", nil)
+	http.ListenAndServe(":1234", nil)
 }
