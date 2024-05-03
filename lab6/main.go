@@ -20,7 +20,7 @@ func create(wg *sync.WaitGroup, nom int) {
 	wg.Done()
 }
 
-func main() {
+func main_1() {
 	var wg sync.WaitGroup
 
 	for i := 1; i < 20; i++ {
